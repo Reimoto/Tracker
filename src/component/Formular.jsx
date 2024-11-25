@@ -14,7 +14,7 @@ function Formular() {
     
     return (
         <div>
-            <h3>Menge</h3>
+            <h3>Menge</h3>test
             <input style={{"width": "50px"}} name="Menge" type="number" id="Menge" onChange={(e) => setMenge(e.target.value)} />g
             <h3>Uhrzeit</h3>
             <input name="Uhrzeit" type="time" id="Uhrzeit" onChange={(e) => setUhrzeit(e.target.value)} />
