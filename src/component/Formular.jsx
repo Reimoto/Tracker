@@ -10,45 +10,46 @@ function Formular() {
     const [Datum, setDatum] = useState(6)
 
     const Sorten = ['White Widow', "Nordle"]
+    const Stimmungen = ['Zuviel', 'ok', 'schlecht', 'krank', 'lausig', 'wütend']
+    const Wers = ['Dominig', 'Jenni', 'D&J']
+    const Konsumformen = ['Tüte', 'Bong', 'Vaporizer', 'Pfeife', 'Edibles']
 
     
     return (
-        <div>
-            <h3>Menge</h3>test
-            <input style={{"width": "50px"}} name="Menge" type="number" id="Menge" onChange={(e) => setMenge(e.target.value)} />g
-            <h3>Uhrzeit</h3>
-            <input name="Uhrzeit" type="time" id="Uhrzeit" onChange={(e) => setUhrzeit(e.target.value)} />
-            <h3>Datum</h3>
-            <input name="Datum" type="date" id="Datum" onChange={(e) => setDatum(e.target.value)} />
-            <h3>Sorte</h3>
-            <select name="Sorte" type="text" id="Sorte" onChange={(e) => setSorte(e.target.value)} >    
-                <option value="White Widow">White Widow</option>
-                <option value="Nordle">Nordle</option>
+        <>
+        <div className="border-2 border-green-500 w-48 shadow- rounded-xl">
+            <h3 className="text-xl">Menge</h3>
+            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" onChange={(e) => setMenge(e.target.value)} /> g
+            <h3 className="text-xl mt-2">Uhrzeit</h3>
+            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Uhrzeit" type="time" id="Uhrzeit" onChange={(e) => setUhrzeit(e.target.value)} />
+            <h3 className="text-xl mt-2">Datum</h3>
+            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Datum" type="date" id="Datum" onChange={(e) => setDatum(e.target.value)} />
+            <h3 className="text-xl mt-2">Sorte</h3>
+            <select key={Sorten} className="p-1 items-center justify-center rounded border border-black" name="Sorte" type="text" id="Sorte" onChange={(e) => setSorte(e.target.value)} >    
+                {Sorten.map((Sorte) => (
+                    <option value={Sorte}>{Sorte}</option>
+                ))}
             </select>
-            <h3>Stimmung</h3>
-            <select name="Stimmung" type="text" id="Stimmung" onChange={(e) => setStimmung(e.target.value)} >    
-                <option value="Zuviel">Zuviel</option>
-                <option value="ok">ok</option>
-                <option value="schlecht">schlecht</option>
-                <option value="krank">krank</option>
-                <option value="lausig">lausig</option>
-                <option value="wütend">wütend</option>
+            <h3 className="text-xl mt-2">Stimmung</h3>
+            <select className="p-1 w-32 items-center justify-center rounded border border-black" name="Stimmung" type="text" id="Stimmung" onChange={(e) => setStimmung(e.target.value)} >    
+                {Stimmungen.map((Stimmung) => (
+                    <option value={Stimmung}>{Stimmung}</option>
+                ))}
             </select>
-            <h3>Wer</h3>
-            <select name="Wer" type="text" id="Wer" onChange={(e) => setWer(e.target.value)} >    
-                <option value="Dominig">Dominig</option>
-                <option value="Jenni">Jenni</option>
-                <option value="D&J">D&J</option>
+            <h3 className="text-xl mt-2">Wer</h3>
+            <select className="p-1 w-32 items-center justify-center rounded border border-black" name="Wer" type="text" id="Wer" onChange={(e) => setWer(e.target.value)} >    
+                {Wers.map((Wer) => (
+                    <option value={Wer}>{Wer}</option>
+                ))}
             </select>
-            <h3>Konsumform</h3>
-            <select name="Konsumform" type="text" id="Konsumform" onChange={(e) => setKonsumform(e.target.value)} >    
-                <option value="Tüte">Tüte</option>
-                <option value="Bong">Bong</option>
-                <option value="Vaporizer">Vaporizer</option>
-                <option value="Pfeife">Pfeife</option>
-                <option value="Edibles">Edibles</option>
+            <h3 className="text-xl mt-2">Konsumform</h3>
+            <select className="mb-3 p-1 w-32 items-center justify-center rounded border border-black" name="Konsumform" type="text" id="Konsumform" onChange={(e) => setKonsumform(e.target.value)} >    
+                {Konsumformen.map((Konsumform) => (
+                    <option value={Konsumform}>{Konsumform}</option>
+                ))}
             </select>    
         </div>
+        </>
     )
 }
 export default Formular
