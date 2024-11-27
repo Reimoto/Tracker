@@ -58,11 +58,11 @@ function Formular() {
         <>
         <form onSubmit={handleSubmit} className="border-2 border-green-500 w-48 shadow- rounded-xl">
             <h3 className="text-xl">Menge</h3>
-            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" value={Menge} onChange={(e) => setMenge(e.target.value)} /> g
+            <input value="0.10" step='0.01' className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" onChange={(e) => setMenge(e.target.value)} /> g
             <h3 className="text-xl mt-2">Uhrzeit</h3>
-            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Uhrzeit" type="time" id="Uhrzeit" value={Uhrzeit} onChange={(e) => setUhrzeit(e.target.value)} />
+            <input value={new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"})} type="time"className="p-1 w-32 items-center justify-center rounded border border-black" name="Uhrzeit" id="Uhrzeit" onChange={(e) => setUhrzeit(e.target.value)} />
             <h3 className="text-xl mt-2">Datum</h3>
-            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Datum" type="date" id="Datum" value={Datum} onChange={(e) => setDatum(e.target.value)} />
+            <input value={new Date().toISOString().slice(0, 10)} className="p-1 w-32 items-center justify-center rounded border border-black" name="Datum" type="date" id="Datum"  onChange={(e) => setDatum(e.target.value)} />
             <h3 className="text-xl mt-2">Sorte</h3>
             <select value={Sorte} className="p-1 items-center justify-center rounded border border-black" name="Sorte" id="Sorte" onChange={(e) => setSorte(e.target.value)} >    
                 <option value="">Select...</option>
