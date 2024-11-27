@@ -2,53 +2,101 @@ import React, { useState } from 'react';
 
 function Formular() {
     const [Menge, setMenge] = useState(0)
-    const [Uhrzeit, setUhrzeit] = useState(1)
-    const [Sorte, setSorte] = useState(2)
-    const [Stimmung, setStimmung] = useState(3)
-    const [Wer, setWer] = useState(4)
-    const [Konsumform, setKonsumform] = useState(5)
-    const [Datum, setDatum] = useState(6)
+    const [Uhrzeit, setUhrzeit] = useState("")
+    const [Sorte, setSorte] = useState("")
+    const [Stimmung, setStimmung] = useState("")
+    const [Wer, setWer] = useState("")
+    const [Konsumform, setKonsumform] = useState("")
+    const [Datum, setDatum] = useState("")
 
     const Sorten = ['White Widow', "Nordle"]
     const Stimmungen = ['Zuviel', 'ok', 'schlecht', 'krank', 'lausig', 'wütend']
     const Wers = ['Dominig', 'Jenni', 'D&J']
     const Konsumformen = ['Tüte', 'Bong', 'Vaporizer', 'Pfeife', 'Edibles']
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:3001/api/entries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Menge,
+                    Uhrzeit,
+                    Datum,
+                    Sorte,
+                    Stimmung,
+                    Wer,
+                    Konsumform
+                }),
+            });
+            
+            if (response.ok) {
+                // Clear form
+                setMenge(0);
+                setUhrzeit("");
+                setDatum("");
+                setSorte("");
+                setStimmung("");
+                setWer("");
+                setKonsumform("");
+                
+                // Trigger a page refresh to update the entry list
+                window.location.reload();
+            } else {
+                alert('Error saving entry');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error saving entry');
+        }
+    };
     
     return (
         <>
-        <div className="border-2 border-green-500 w-48 shadow- rounded-xl">
+        <form onSubmit={handleSubmit} className="border-2 border-green-500 w-48 shadow- rounded-xl">
             <h3 className="text-xl">Menge</h3>
-            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" onChange={(e) => setMenge(e.target.value)} /> g
+            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" value={Menge} onChange={(e) => setMenge(e.target.value)} /> g
             <h3 className="text-xl mt-2">Uhrzeit</h3>
-            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Uhrzeit" type="time" id="Uhrzeit" onChange={(e) => setUhrzeit(e.target.value)} />
+            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Uhrzeit" type="time" id="Uhrzeit" value={Uhrzeit} onChange={(e) => setUhrzeit(e.target.value)} />
             <h3 className="text-xl mt-2">Datum</h3>
-            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Datum" type="date" id="Datum" onChange={(e) => setDatum(e.target.value)} />
+            <input className="p-1 w-32 items-center justify-center rounded border border-black" name="Datum" type="date" id="Datum" value={Datum} onChange={(e) => setDatum(e.target.value)} />
             <h3 className="text-xl mt-2">Sorte</h3>
-            <select key={Sorten} className="p-1 items-center justify-center rounded border border-black" name="Sorte" type="text" id="Sorte" onChange={(e) => setSorte(e.target.value)} >    
-                {Sorten.map((Sorte) => (
-                    <option value={Sorte}>{Sorte}</option>
+            <select value={Sorte} className="p-1 items-center justify-center rounded border border-black" name="Sorte" id="Sorte" onChange={(e) => setSorte(e.target.value)} >    
+                <option value="">Select...</option>
+                {Sorten.map((sorte) => (
+                    <option key={sorte} value={sorte}>{sorte}</option>
                 ))}
             </select>
             <h3 className="text-xl mt-2">Stimmung</h3>
-            <select className="p-1 w-32 items-center justify-center rounded border border-black" name="Stimmung" type="text" id="Stimmung" onChange={(e) => setStimmung(e.target.value)} >    
-                {Stimmungen.map((Stimmung) => (
-                    <option value={Stimmung}>{Stimmung}</option>
+            <select value={Stimmung} className="p-1 w-32 items-center justify-center rounded border border-black" name="Stimmung" id="Stimmung" onChange={(e) => setStimmung(e.target.value)} >    
+                <option value="">Select...</option>
+                {Stimmungen.map((stimmung) => (
+                    <option key={stimmung} value={stimmung}>{stimmung}</option>
                 ))}
             </select>
             <h3 className="text-xl mt-2">Wer</h3>
-            <select className="p-1 w-32 items-center justify-center rounded border border-black" name="Wer" type="text" id="Wer" onChange={(e) => setWer(e.target.value)} >    
-                {Wers.map((Wer) => (
-                    <option value={Wer}>{Wer}</option>
+            <select value={Wer} className="p-1 w-32 items-center justify-center rounded border border-black" name="Wer" id="Wer" onChange={(e) => setWer(e.target.value)} >    
+                <option value="">Select...</option>
+                {Wers.map((wer) => (
+                    <option key={wer} value={wer}>{wer}</option>
                 ))}
             </select>
             <h3 className="text-xl mt-2">Konsumform</h3>
-            <select className="mb-3 p-1 w-32 items-center justify-center rounded border border-black" name="Konsumform" type="text" id="Konsumform" onChange={(e) => setKonsumform(e.target.value)} >    
-                {Konsumformen.map((Konsumform) => (
-                    <option value={Konsumform}>{Konsumform}</option>
+            <select value={Konsumform} className="mb-3 p-1 w-32 items-center justify-center rounded border border-black" name="Konsumform" id="Konsumform" onChange={(e) => setKonsumform(e.target.value)} >    
+                <option value="">Select...</option>
+                {Konsumformen.map((konsumform) => (
+                    <option key={konsumform} value={konsumform}>{konsumform}</option>
                 ))}
-            </select>    
-        </div>
+            </select>
+            <div className="flex justify-center mb-3">
+                <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Save Entry
+                </button>
+            </div>
+        </form>
         </>
     )
 }
