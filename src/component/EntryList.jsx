@@ -28,13 +28,13 @@ function EntryList() {
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="py-2 px-4 border-b">Date</th>
-                            <th className="py-2 px-4 border-b">Time</th>
-                            <th className="py-2 px-4 border-b">Amount</th>
-                            <th className="py-2 px-4 border-b">Strain</th>
-                            <th className="py-2 px-4 border-b">Mood</th>
-                            <th className="py-2 px-4 border-b">Who</th>
-                            <th className="py-2 px-4 border-b">Form</th>
+                            <th className="py-2 px-4 border-b">Datum</th>
+                            <th className="py-2 px-4 border-b">Uhrzeit</th>
+                            <th className="py-2 px-4 border-b">Menge</th>
+                            <th className="py-2 px-4 border-b">Sorte</th>
+                            <th className="py-2 px-4 border-b">Stimmung</th>
+                            <th className="py-2 px-4 border-b">Wer</th>
+                            <th className="py-2 px-4 border-b">Konsumart</th>
                         </tr>
                     </thead>
                     <tbody>
