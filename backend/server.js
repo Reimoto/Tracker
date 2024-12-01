@@ -4,6 +4,7 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
+import { mkdirSync, existsSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,11 +17,19 @@ app.use(cors());
 app.use(express.json());
 
 // Database setup
-const db = new sqlite3.Database(path.join(__dirname, 'weedtracker.db'), (err) => {
+const dbPath = path.join(__dirname, '..', 'data', 'weedtracker.db');
+
+// Ensure data directory exists
+const dataDir = path.join(__dirname, '..', 'data');
+if (!existsSync(dataDir)) {
+    mkdirSync(dataDir, { recursive: true });
+}
+
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
         console.error('Error opening database:', err);
     } else {
-        console.log('Connected to SQLite database');
+        console.log('Connected to SQLite database at:', dbPath);
         createTables();
     }
 });
@@ -41,6 +50,7 @@ function createTables() {
         )
     `);
 }
+
 // Routes
 app.post('/api/entries', (req, res) => {
     const { Menge, Uhrzeit, Datum, Sorte, Stimmung, Wer, Konsumform } = req.body;
@@ -69,6 +79,19 @@ app.get('/api/entries', (req, res) => {
             return;
         }
         res.json(rows);
+    });
+});
+
+// Delete entry route
+app.delete('/api/entries/:id', (req, res) => {
+    const id = req.params.id;
+    
+    db.run('DELETE FROM entries WHERE id = ?', id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: "Entry deleted successfully" });
     });
 });
 

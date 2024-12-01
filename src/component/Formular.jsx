@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 function Formular() {
-    const [Menge, setMenge] = useState(0)
-    const [Uhrzeit, setUhrzeit] = useState("")
+    const [Menge, setMenge] = useState(0.10)
+    const [Uhrzeit, setUhrzeit] = useState(new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"}))
     const [Sorte, setSorte] = useState("")
     const [Stimmung, setStimmung] = useState("")
     const [Wer, setWer] = useState("")
     const [Konsumform, setKonsumform] = useState("")
-    const [Datum, setDatum] = useState("")
+    const [Datum, setDatum] = useState(new Date().toISOString().slice(0, 10))
 
     const Sorten = ['White Widow', "Nordle"]
     const Stimmungen = ['Zuviel', 'ok', 'schlecht', 'krank', 'lausig', 'wütend']
-    const Wers = ['Dominig', 'Jenni', 'D&J']
+    const Wers = ['Dominik', 'Jenny', 'D&J']
     const Konsumformen = ['Tüte', 'Bong', 'Vaporizer', 'Pfeife', 'Edibles']
 
     const handleSubmit = async (e) => {
@@ -35,9 +35,9 @@ function Formular() {
             
             if (response.ok) {
                 // Clear form
-                setMenge(0);
-                setUhrzeit("");
-                setDatum("");
+                setMenge(0.10);
+                setUhrzeit(new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"}));
+                setDatum(new Date().toISOString().slice(0, 10));
                 setSorte("");
                 setStimmung("");
                 setWer("");
@@ -58,11 +58,25 @@ function Formular() {
         <>
         <form onSubmit={handleSubmit} className="border-2 border-green-500 w-48 shadow- rounded-xl">
             <h3 className="text-xl">Menge</h3>
-            <input value="0.10" step='0.01' className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" onChange={(e) => setMenge(e.target.value)} /> g
+            <input value={Menge} step='0.01' className="p-1 w-32 items-center justify-center rounded border border-black" name="Menge" type="number" id="Menge" onChange={(e) => setMenge(Number(e.target.value))} /> g
             <h3 className="text-xl mt-2">Uhrzeit</h3>
-            <input value={new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"})} type="time"className="p-1 w-32 items-center justify-center rounded border border-black" name="Uhrzeit" id="Uhrzeit" onChange={(e) => setUhrzeit(e.target.value)} />
+            <input 
+                value={Uhrzeit} 
+                type="time"
+                className="p-1 w-32 items-center justify-center rounded border border-black" 
+                name="Uhrzeit" 
+                id="Uhrzeit" 
+                onChange={(e) => setUhrzeit(e.target.value)} 
+            />
             <h3 className="text-xl mt-2">Datum</h3>
-            <input value={new Date().toISOString().slice(0, 10)} className="p-1 w-32 items-center justify-center rounded border border-black" name="Datum" type="date" id="Datum"  onChange={(e) => setDatum(e.target.value)} />
+            <input 
+                value={Datum} 
+                type="date"
+                className="p-1 w-32 items-center justify-center rounded border border-black" 
+                name="Datum" 
+                id="Datum"  
+                onChange={(e) => setDatum(e.target.value)} 
+            />
             <h3 className="text-xl mt-2">Sorte</h3>
             <select value={Sorte} className="p-1 items-center justify-center rounded border border-black" name="Sorte" id="Sorte" onChange={(e) => setSorte(e.target.value)} >    
                 <option value="">Select...</option>
