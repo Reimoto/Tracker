@@ -10,8 +10,8 @@ function Formular() {
     const [Datum, setDatum] = useState(new Date().toISOString().slice(0, 10))
 
     const Sorten = ['White Widow', "Nordle"]
-    const Stimmungen = ['Zuviel', 'ok', 'schlecht', 'krank', 'lausig', 'wütend']
-    const Wers = ['Dominik', 'Jenny', 'D&J']
+    const Stimmungen = ['zu viel', 'gut', 'ok', 'schlecht', 'krank', 'lausig', 'wütend']
+    const Wers = ['Dominik', 'Jenny', 'D&J', 'D&J&B']
     const Konsumformen = ['Tüte', 'Bong', 'Vaporizer', 'Pfeife', 'Edibles']
 
     const handleSubmit = async (e) => {
