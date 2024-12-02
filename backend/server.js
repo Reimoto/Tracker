@@ -95,6 +95,26 @@ app.delete('/api/entries/:id', (req, res) => {
     });
 });
 
+// Update entry route
+app.put('/api/entries/:id', (req, res) => {
+    const id = req.params.id;
+    const { Menge, Uhrzeit, Datum, Sorte, Stimmung, Wer, Konsumform } = req.body;
+    
+    db.run(
+        `UPDATE entries 
+         SET menge = ?, uhrzeit = ?, datum = ?, sorte = ?, stimmung = ?, wer = ?, konsumform = ?
+         WHERE id = ?`,
+        [Menge, Uhrzeit, Datum, Sorte, Stimmung, Wer, Konsumform, id],
+        function(err) {
+            if (err) {
+                res.status(400).json({ error: err.message });
+                return;
+            }
+            res.json({ message: "Entry updated successfully" });
+        }
+    );
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
