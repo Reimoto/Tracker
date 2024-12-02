@@ -28,3 +28,9 @@ backend/node_modules
 backend/*.db
 backend/*.sqlite
 backend/*.sqlite3
+
+# Database files
+data/
+*.db
+*.sqlite
+*.sqlite3
