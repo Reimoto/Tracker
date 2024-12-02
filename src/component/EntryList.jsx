@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function EntryList() {
+function EntryList({ onEntriesChange }) {
     const [entries, setEntries] = useState([]);
     const [editingEntry, setEditingEntry] = useState(null);
     const [editForm, setEditForm] = useState({
@@ -14,8 +14,8 @@ function EntryList() {
     });
 
     const Sorten = ['White Widow', "Nordle"];
-    const Stimmungen = ['Zuviel', 'ok', 'schlecht', 'krank', 'lausig', 'wütend'];
-    const Wers = ['Dominik', 'Jenny', 'D&J'];
+    const Stimmungen = ['zu viel', 'gut', 'ok', 'schlecht', 'krank', 'lausig', 'wütend'];
+    const Wers = ['Dominik', 'Jenny', 'D&J', 'D&J&B'];
     const Konsumformen = ['Tüte', 'Bong', 'Vaporizer', 'Pfeife', 'Edibles'];
 
     useEffect(() => {
@@ -45,6 +45,7 @@ function EntryList() {
                 if (response.ok) {
                     // Remove the entry from the local state
                     setEntries(entries.filter(entry => entry.id !== id));
+                    onEntriesChange(); // Notify parent of change
                 } else {
                     console.error('Failed to delete entry');
                 }
@@ -78,13 +79,23 @@ function EntryList() {
             });
 
             if (response.ok) {
-                // Update the entry in the local state
+                // Update the entry in the local state with correct property names
+                const updatedEntry = {
+                    id: editingEntry.id,
+                    menge: editForm.Menge,
+                    uhrzeit: editForm.Uhrzeit,
+                    datum: editForm.Datum,
+                    sorte: editForm.Sorte,
+                    stimmung: editForm.Stimmung,
+                    wer: editForm.Wer,
+                    konsumform: editForm.Konsumform
+                };
+                
                 setEntries(entries.map(entry => 
-                    entry.id === editingEntry.id 
-                        ? { ...entry, ...editForm }
-                        : entry
+                    entry.id === editingEntry.id ? updatedEntry : entry
                 ));
                 setEditingEntry(null);
+                onEntriesChange(); // Notify parent of change
             } else {
                 console.error('Failed to update entry');
             }

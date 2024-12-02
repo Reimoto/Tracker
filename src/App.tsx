@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,13 +7,25 @@ import EntryList from './component/EntryList.jsx'
 import ConsumptionLineGraph from './component/ConsumptionLineGraph';
 
 function App() {
-  const [count, setCount] = useState(0)
-  const data = [
-    { date: '2023-10-01', amount: 5 },
-    { date: '2023-10-02', amount: 3 },
-    { date: '2023-10-03', amount: 8 },
-    // Add more data as needed
-  ];
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    fetchEntries();
+  }, []);
+
+  const fetchEntries = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/entries');
+      if (response.ok) {
+        const data = await response.json();
+        setEntries(data);
+      } else {
+        console.error('Failed to fetch entries');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -23,10 +35,10 @@ function App() {
           <Formular/>
         </div>
         <div className="flex-1">
-          <EntryList />
+          <EntryList onEntriesChange={fetchEntries} />
         </div>
         <div className="flex-1">
-          <ConsumptionLineGraph data={data} />
+          <ConsumptionLineGraph data={entries} />
         </div>
       </div>
     </div>
